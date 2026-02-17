@@ -4,8 +4,8 @@ import { QUESTIONS } from './questions';
 import { ResultData, Modo, PillarType } from './types';
 import Results from './components/Results';
 
-// ADICIONE SEU LINK DE CHECKOUT AQUI
-const CHECKOUT_LINK = 'https://pay.hotmart.com/SEU_LINK_AQUI';
+// LINK DE CHECKOUT FORNECIDO
+const CHECKOUT_LINK = 'https://pay.cakto.com.br/e8gm3xs_772496';
 
 const App: React.FC = () => {
   const [step, setStep] = useState<'welcome' | 'quiz' | 'calculating' | 'results'>('welcome');
@@ -26,7 +26,7 @@ const App: React.FC = () => {
   };
 
   const handleGoToCheckout = () => {
-    // Redireciona diretamente para o link externo de checkout.
+    // Redireciona diretamente para o link externo de checkout fornecido pelo usuário.
     window.location.href = CHECKOUT_LINK;
   };
 
@@ -64,10 +64,11 @@ const App: React.FC = () => {
           
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-black text-slate-800 leading-tight">
-              Olá! <br/><span className="text-blue-600">Vamos melhorar sua saúde?</span>
+              Olá! <br/><span className="text-blue-600">Vamos melhorar a saúde?</span>
             </h1>
-            <p className="text-xl text-slate-600 max-w-sm mx-auto font-bold">
-              Sua saúde é o seu maior tesouro! Vamos descobrir como está o motor do seu metabolismo? 🔋
+            <p className="text-xl text-slate-600 max-w-md mx-auto font-bold">
+              Sua saúde é algo que te define e te move! 🔋<br/>
+              Vamos descobrir como está o seu motor metabólico?
             </p>
           </div>
 

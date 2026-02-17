@@ -61,7 +61,6 @@ const Results: React.FC<ResultsProps> = ({ data, onRestart, onGoToCheckout }) =>
         </div>
 
         <div className="space-y-6">
-          {/* Fix: Explicitly cast Object.entries to ensure 'score' is typed as 'number' */}
           {(Object.entries(data.pilarScores) as [string, number][]).map(([pilar, score]) => (
             <div key={pilar} className="space-y-2">
               <div className="flex justify-between items-center">
@@ -78,7 +77,7 @@ const Results: React.FC<ResultsProps> = ({ data, onRestart, onGoToCheckout }) =>
         <div className="mt-10 p-6 bg-blue-50 rounded-2xl border-4 border-slate-800 border-dashed">
           <h3 className="text-xl font-black text-slate-800 mb-2">Placar Geral: {data.totalScore}%</h3>
           <p className="text-slate-600 font-bold leading-relaxed">
-            Sua jornada começou! O Capitão analisou tudo e preparou o seu <strong>Cartoon Plan</strong> personalizado para os próximos <strong>7 Days</strong>.
+            Sua jornada começou! Eu analisei tudo e preparei o seu <strong>Cartoon Plan</strong> personalizado para os próximos <strong>7 Days</strong>.
           </p>
         </div>
       </div>
