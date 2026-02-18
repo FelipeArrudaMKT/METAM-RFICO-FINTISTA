@@ -3,6 +3,7 @@ import React, { useState, useMemo } from 'react';
 import { QUESTIONS } from './questions';
 import { ResultData, Modo, PillarType } from './types';
 import Results from './components/Results';
+import PitchScreen from './components/PitchScreen';
 
 // LINK DE CHECKOUT FORNECIDO
 const CHECKOUT_LINK = 'https://pay.cakto.com.br/e8gm3xs_772496';
@@ -11,6 +12,7 @@ const App: React.FC = () => {
   const [step, setStep] = useState<'welcome' | 'quiz' | 'calculating' | 'results'>('welcome');
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
+  const [hasShownPitch, setHasShownPitch] = useState(false);
 
   const handleStart = () => setStep('quiz');
 
@@ -26,7 +28,6 @@ const App: React.FC = () => {
   };
 
   const handleGoToCheckout = () => {
-    // Redireciona diretamente para o link externo de checkout fornecido pelo usuário.
     window.location.href = CHECKOUT_LINK;
   };
 
@@ -48,6 +49,10 @@ const App: React.FC = () => {
     else if (score >= 40) modo = Modo.Ajuste;
     return { pilarScores, totalScore: score, modo, answers };
   }, [step, answers]);
+
+  // Lógica de exibição da Pitch Screen
+  // O índice 6 corresponde à chegada na pergunta 7 (após responder as 6 primeiras)
+  const isPitchTime = step === 'quiz' && currentIdx === 6 && !hasShownPitch;
 
   return (
     <div className="max-w-2xl mx-auto px-4 pt-10 pb-20">
@@ -90,7 +95,7 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {step === 'quiz' && (
+      {step === 'quiz' && !isPitchTime && (
         <div className="space-y-8 animate-fadeIn">
           <div className="space-y-2">
             <div className="flex justify-between items-end">
@@ -133,6 +138,10 @@ const App: React.FC = () => {
         </div>
       )}
 
+      {isPitchTime && (
+        <PitchScreen onContinue={() => setHasShownPitch(true)} />
+      )}
+
       {step === 'calculating' && (
         <div className="text-center py-20 space-y-8">
           <div className="w-32 h-32 bg-blue-600 rounded-full border-8 border-slate-800 mx-auto flex items-center justify-center animate-spin">
@@ -146,7 +155,12 @@ const App: React.FC = () => {
       {step === 'results' && resultData && (
         <Results 
           data={resultData} 
-          onRestart={() => { setStep('welcome'); setCurrentIdx(0); setAnswers([]); }} 
+          onRestart={() => { 
+            setStep('welcome'); 
+            setCurrentIdx(0); 
+            setAnswers([]); 
+            setHasShownPitch(false);
+          }} 
           onGoToCheckout={handleGoToCheckout}
         />
       )}
